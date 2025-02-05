@@ -1,0 +1,99 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    // cmake build task
+    {
+      "label": "build",
+      "type": "shell",
+      "command": "cmake",
+      "args": [
+        "--build",
+        "${workspaceFolder}/build",
+        "--config",
+        "Debug",
+        "--target",
+        "indi_benropolaris"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      },
+      "problemMatcher": [
+        "$gcc"
+      ],
+      "isBackground": false,
+    },
+    {
+      "label": "kill",
+      "type": "shell",
+      "command": "killall",
+      "args": [
+        "-q",
+        "indiserver",
+        "||",
+        "true"
+      ],
+      "group": {
+        "kind": "none",
+        "isDefault": false
+      },
+      "isBackground": false,
+    },
+    {
+      "label": "simulate",
+      "type": "shell",
+      "command": "nc",
+      "args": [
+        "-lv",
+        "9090"
+      ],
+      "group": {
+        "kind": "test",
+        "isDefault": false
+      },
+      "problemMatcher": [
+        "$gcc"
+      ],
+      "isBackground": false,
+    },
+    {
+      "label": "proxy",
+      "type": "shell",
+      "command": "socat",
+      "args": [
+        "TCP-LISTEN:9090,fork",
+        "TCP:192.168.0.1:9090"
+      ],
+      "group": {
+        "kind": "test",
+        "isDefault": false
+      },
+      "problemMatcher": [
+        "$gcc"
+      ],
+      "isBackground": false,
+    },
+    {
+      "label": "run",
+      "type": "shell",
+      "command": "indiserver",
+      "args": [
+        "-p",
+        "7625",
+        "-v",
+        "./build/indi_benropolaris"
+      ],
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "dependsOn": [
+        "build", "kill",
+      ],
+      "problemMatcher": [
+        "$gcc"
+      ],
+      "isBackground": false,
+    },
+  ]
+}

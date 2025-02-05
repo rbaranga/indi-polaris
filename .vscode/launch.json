@@ -1,0 +1,30 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "(lldb) Launch",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "/usr/local/bin/indiserver",
+        "args": ["-v", "-p", "7625", "./indi_benropolaris"],
+        "stopAtEntry": false,
+        "cwd": "${workspaceFolder}/build",
+        "environment": [
+            {
+                "name": "PATH",
+                "value": ""
+            },
+        ],
+        "externalConsole": false,
+        "MIMode": "lldb",
+        "setupCommands": [
+          {
+            "description": "Enable pretty-printing for lldb",
+            "text": "-enable-pretty-printing",
+            "ignoreFailures": true
+          }
+        ],
+        "preLaunchTask": "build"
+      }
+    ]
+  }
